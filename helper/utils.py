@@ -35,6 +35,7 @@ def createGraph(forecast_2022):
 
     # Enhance the layout
     fig.update_layout(
+        autosize = True,
         title='Daily Receipts for 2021 and Predicted Monthly Receipts for 2022',
         xaxis_title="Date",
         yaxis_title="Receipt Count",
