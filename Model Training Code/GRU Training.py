@@ -1,36 +1,17 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.arima.model import ARIMA
-import prophet
-from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, RobustScaler
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.preprocessing import RobustScaler
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, Dropout, GRU, RepeatVector, TimeDistributed
+from keras.layers import Dense, GRU, RepeatVector, TimeDistributed
 from keras.callbacks import EarlyStopping
+import plotly.express as px
+import plotly.graph_objects as go
 
 
-# In[ ]:
-
-
-# Load your data and rename # Date to Date
 data = pd.read_csv('data_daily.csv')
 data = data.rename(columns={'# Date': 'Date'})
 
-
-# In[ ]:
-
-
 print(data.isnull().values.any())
-
-
-# In[ ]:
-
 
 # Scaling data
 scaler = RobustScaler()
@@ -62,8 +43,6 @@ early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weig
 
 model.fit(X, y, epochs=100, batch_size=1, verbose=1, callbacks=[early_stopping], validation_split=0.2)
 
-
-# In[ ]:
 
 
 look_back_period = 90  # Set your desired look-back period
@@ -97,19 +76,6 @@ print(forecast_df)
 # If you want monthly aggregates:
 monthly_predictions = forecast_df.resample('M', on='Date').sum()
 print(monthly_predictions)
-
-
-# In[ ]:
-
-
-data
-
-
-# In[ ]:
-
-
-import plotly.express as px
-import plotly.graph_objects as go
 
 # Create the base line plot for 2021 data
 fig = px.line(data, x='Date', y='Receipt_Count', title='Daily Receipts for 2021 and Predicted Monthly Receipts for 2022',
