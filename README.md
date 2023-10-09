@@ -74,7 +74,7 @@ What didn't go well with reasons
 
 ### Conclusion 
 
-The dataset didn't had any missing values which was great. However, if we had a dataset of one more year the model could train better. 
+The dataset didn't had any missing values which was great. However, if we had a dataset of one more year the model could train better. I am also not sure if we could augment the dataset as augmenting the dataset (speacially numerical dataset) would require extensive domain knowledge study.
 
 ## Outputs from the web application
 
