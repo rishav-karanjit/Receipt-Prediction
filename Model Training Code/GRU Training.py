@@ -17,7 +17,7 @@ print(data.isnull().values.any())
 scaler = RobustScaler()
 scaled_data = scaler.fit_transform(data['Receipt_Count'].values.reshape(-1, 1))
 
-# Convert data to appropriate shape for LSTM
+# Convert data to appropriate shape for GRU
 def create_dataset(dataset, look_back=90, forecast_horizon=30):
     X, Y = [], []
     for i in range(len(dataset) - look_back - forecast_horizon + 1):
@@ -31,7 +31,7 @@ X, y = create_dataset(scaled_data)
 X = X.reshape(X.shape[0], X.shape[1], 1)
 y = y.reshape(y.shape[0], y.shape[1], 1)
 
-# LSTM model
+# GRU model
 model = Sequential()
 model.add(GRU(20, activation='relu', input_shape=(X.shape[1], X.shape[2])))
 model.add(RepeatVector(30))  # Repeat the feature vector 30 times
@@ -45,7 +45,7 @@ model.fit(X, y, epochs=100, batch_size=1, verbose=1, callbacks=[early_stopping],
 
 
 
-look_back_period = 90  # Set your desired look-back period
+look_back_period = 90  # Set look-back period
 
 predictions_2022 = []
 
