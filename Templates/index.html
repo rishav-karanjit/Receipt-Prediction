@@ -5,72 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Viewer</title>
     <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px 12px;
-        }
+        
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/index.css') }}">
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/GRUpredict.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Prophetpredict.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </head>
 <body>
 
-<h2>Data from Backend</h2>
-<table id="data-table">
-    <thead>
-        <!-- Table headers will be added here -->
-    </thead>
-    <tbody>
-        <!-- Table data will be added here -->
-    </tbody>
-</table>
+    <select id="prediction-method" onchange="showDiv()">
+        <option value="select" selected>Select a Prediction Method</option>
+        <option value="GRU">GRU</option>
+        <option value="Prophet">Prophet</option>
+    </select>
 
-<div id="plotlyDiv" style="width:90%"></div>
+    <div id="GRU-Prediction">
+        <h2>GRU Prediction data</h2>
+        <table id="GRU-table">
+            <thead>
+                <!-- Table headers will be added here -->
+            </thead>
+            <tbody>
+                <!-- Table data will be added here -->
+            </tbody>
+        </table>
+        <div id="GRUplotlyDiv" style="width:90%"></div>
+    </div>
 
-<script>
-    // Fetch data from the Flask backend
-    fetch('/predict')
-    .then(response => response.json())
-    .then(data => {
-        const table = document.getElementById('data-table');
-        const thead = table.querySelector('thead');
-        const tbody = table.querySelector('tbody');
-
-        // If data is available and not empty
-        // Handle the table data similar to before
-        const tableData = data.data;
-        if(tableData.length > 0) {
-            // Add table headers
-            const headers = Object.keys(tableData[0]);
-            let headerRow = '<tr>';
-            for(let header of headers) {
-                headerRow += `<th>${header}</th>`;
-            }
-            headerRow += '</tr>';
-            thead.innerHTML = headerRow;
-
-            // Add table rows
-            for(let row of tableData) {
-                let rowHTML = '<tr>';
-                for(let header of headers) {
-                    rowHTML += `<td>${row[header]}</td>`;
-                }
-                rowHTML += '</tr>';
-                tbody.innerHTML += rowHTML;
-            }
-        } else {
-            table.innerHTML = '<tr><td>No data available</td></tr>';
-        }
-        
-        const graphData = JSON.parse(data.graph);
-        Plotly.newPlot('plotlyDiv', graphData.data, graphData.layout);
-    })
-    .catch(error => {
-        console.error('There was an error fetching the data', error);
-    });
-</script>
+    <div id="Prophet-Prediction">
+        <h2>Prophet Prediction data</h2>
+        <table id="Prophet-table">
+            <thead>
+                <!-- Table headers will be added here -->
+            </thead>
+            <tbody>
+                <!-- Table data will be added here -->
+            </tbody>
+        </table>
+        <div id="ProphetplotlyDiv" style="width:90%"></div>
+    </div>
 
 </body>
 </html>
