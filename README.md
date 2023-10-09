@@ -68,7 +68,7 @@ What went well?
 What didn't go well with reasons
 - Test set was not created. So, we don't have conventional evidence that the model is not overfitting. However, the plots of 2022 prediction clearly shows that the model was not fitting. The model was able to capture pattern from 2021 data and apply the same pattern to 2022.
 - Output from LSTM was not added to the web application because it didn't performed well compared to GRU and Prophet.
-- Prophet might not assess my ML skill well but it was kept because it did well. Other models are added also added which will be helpful to assess my ML skill.
+- Prophet might not assess my ML skill well but it was kept because it did well. Other models are also added which will be helpful to assess my ML skill.
 - Unit testing was not done in the web application. This is because this project will not go to the production environment and spending extra dev time for unit testing was thought to be redundant. Another reason is that, in my past experience web application would be created to present the output to product owner and unit testing was not done there.
 - Going through a code review process would be very helpful as I would get the second person's feedback which could improve my code.
 
