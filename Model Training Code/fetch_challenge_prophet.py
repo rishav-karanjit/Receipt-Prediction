@@ -1,7 +1,7 @@
 # Import necessary libraries
 import pandas as pd
 from prophet import Prophet
-
+import pickle
 # Load data and rename columns
 data = pd.read_csv('./DataSet/data_daily.csv')
 data = data.rename(columns={'# Date': 'Date', 'Receipt_Count': 'y'})
@@ -31,8 +31,6 @@ print(forecast_2022)
 forecast_2022['month'] = forecast_2022['ds'].dt.to_period('M')
 monthly_predictions = forecast_2022.groupby('month')['yhat'].sum()
 print(monthly_predictions)
-
-import pickle
 
 with open('prophet_model.pkl', 'wb') as file:
     pickle.dump(model, file)
